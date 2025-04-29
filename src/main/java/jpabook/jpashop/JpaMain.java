@@ -1,35 +1,33 @@
-package hellojpa;
+package jpabook.jpashop;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import jpabook.jpashop.domain.Book;
+import jpabook.jpashop.domain.Order;
+import jpabook.jpashop.domain.OrderItem;
 
 public class JpaMain {
 
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
         EntityManager em = emf.createEntityManager();
-
         EntityTransaction tx = em.getTransaction();
-
         tx.begin();
-        try{
 
-            Member member1 = new Member(150L, "A");
-            Member member2 = new Member(160L, "B");
+        try {
 
-            em.persist(member1);
-            em.persist(member2);
-
+            Book book = new Book();
+            book.setName("JPA");
+            em.persist(book);
+            
             tx.commit();
-        }catch(Exception e){
+        } catch (Exception e) {
             tx.rollback();
-        }finally {
+        } finally {
             em.close();
         }
-
         emf.close();
     }
 
